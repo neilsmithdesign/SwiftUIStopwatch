@@ -16,6 +16,8 @@ struct StopwatchView : View {
         NavigationView {
             VStack {
                 Spacer()
+                Text("00:00.00").font(.system(size: 84)).fontWeight(.thin)
+                Spacer()
                 StopwatchControlsView(
                     isActive: $stopwatch.isActive,
                     isRunning: $stopwatch.isRunning,

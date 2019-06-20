@@ -35,8 +35,17 @@ final class Stopwatch: BindableObject {
 
 
     // MARK: Data
-    private var lapTimes: [Date] = []
+    private var lapTimes: [TimeInterval] = []
     private var elapsedTime: TimeInterval = 0
+    
+    
+    // MARK: Utilities
+    private lazy var timer: TimeController = {
+        let tc = TimeController(mode: .stopwatch) { [weak self] time in
+            self?.update(for: time)
+        }
+        return tc
+    }()
     
 }
 
@@ -69,12 +78,14 @@ extension Stopwatch {
     private func start() {
         isRunning = true
         isActive = true
+        timer.start()
         notify()
     }
     
     private func pause() {
         isRunning = false
         isActive = true
+        timer.pause()
         notify()
     }
     
@@ -82,11 +93,17 @@ extension Stopwatch {
         isRunning = false
         isActive = false
         lapTimes.removeAll()
+        timer.reset()
         notify()
     }
     
     private func recordLapTime() {
-        lapTimes.append(Date())
+        lapTimes.append(elapsedTime)
+        notify()
+    }
+    
+    private func update(for newTime: TimeInterval) {
+        elapsedTime = newTime
         notify()
     }
     

@@ -49,7 +49,7 @@ extension TimeInterval {
             str += str.isEmpty ? s : ":\(s)"
         }
         if let ms = TimeInterval.getString(from: .milliseconds, for: values) {
-            str += str.isEmpty ? ms.prefix(2) : ":\(ms.prefix(2))"
+            str += str.isEmpty ? ms.prefix(2) : ".\(ms.prefix(2))"
         }
         return str
     }
