@@ -21,9 +21,9 @@ final class Stopwatch: BindableObject {
     
     
     // MARK: State
-    var isActive: Bool = false
+    private (set) var isActive: Bool = false
     
-    var isRunning: Bool = false
+    private (set) var isRunning: Bool = false
     
     private var mode: Mode {
         if isActive {
@@ -36,7 +36,7 @@ final class Stopwatch: BindableObject {
 
     // MARK: Data
     private var lapTimes: [TimeInterval] = []
-    private var elapsedTime: TimeInterval = 0
+    private (set) var elapsedTime: TimeInterval = 0
     
     
     // MARK: Utilities

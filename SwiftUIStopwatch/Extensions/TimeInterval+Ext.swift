@@ -28,30 +28,29 @@ extension TimeInterval {
         }
     }
     
-    func components(_ comps: Set<Component>) -> [Component : Int] {
+    func values(_ components: Set<Component>) -> [Component : Int] {
         var values: [Component : Int] = [:]
         var remainingTime = self
-        for comp in comps.sorted(by: { $0.rawValue < $1.rawValue }) {
+        for comp in components.sorted(by: { $0.rawValue < $1.rawValue }) {
             let v = comp.value(for: remainingTime)
             values[comp] = v
             remainingTime -= TimeInterval(v) * comp.divisor
-            print("rTime: \(remainingTime)")
         }
         return values
     }
     
-    static func formatted(for values: [Component : Int]) -> String {
-        var str = ""
+    static func formatted(for values: [Component : Int]) -> [Component : String] {
+        var strings: [Component : String] = [:]
         if let m = TimeInterval.getString(from: .minutes, for: values) {
-            str += m
+            strings[.minutes] = m
         }
         if let s = TimeInterval.getString(from: .seconds, for: values) {
-            str += str.isEmpty ? s : ":\(s)"
+            strings[.seconds] = s
         }
         if let ms = TimeInterval.getString(from: .milliseconds, for: values) {
-            str += str.isEmpty ? ms.prefix(2) : ".\(ms.prefix(2))"
+            strings[.milliseconds] = ms
         }
-        return str
+        return strings
     }
     
     private static func getString(from comp: Component, for values: [Component : Int]) -> String? {
@@ -61,4 +60,5 @@ extension TimeInterval {
         }
         return n < 10 ? "0\(n)" : "\(n)"
     }
+    
 }

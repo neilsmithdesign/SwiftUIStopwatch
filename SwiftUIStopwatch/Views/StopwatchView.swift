@@ -16,7 +16,7 @@ struct StopwatchView : View {
         NavigationView {
             VStack {
                 Spacer()
-                Text("00:00.00").font(.system(size: 84)).fontWeight(.thin)
+                TimeView(time: $stopwatch.elapsedTime)
                 Spacer()
                 StopwatchControlsView(
                     isActive: $stopwatch.isActive,
@@ -34,3 +34,41 @@ struct StopwatchView : View {
 
 
 
+struct TimeView: View {
+    
+    @Binding var time: TimeInterval
+    
+    var minutes: String {
+        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
+        return strings[.minutes]!
+    }
+    var seconds: String {
+        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
+        return strings[.seconds]!
+    }
+    var milliseconds: String {
+        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
+        return strings[.milliseconds]!
+    }
+    
+    var body: some View {
+        HStack {
+            DigitView(text: minutes)
+            DigitView(text: ":")
+            DigitView(text: seconds)
+            DigitView(text: ".")
+            DigitView(text: milliseconds)
+        }
+    }
+    
+    private struct DigitView: View {
+        
+        let text: String
+        
+        var body: some View {
+            Text(text).font(.system(size: 84)).fontWeight(.thin)
+        }
+        
+    }
+    
+}
