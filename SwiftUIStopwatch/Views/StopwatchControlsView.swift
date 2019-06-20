@@ -21,7 +21,8 @@ struct StopwatchControlsView : View {
             LapResetButton(isActive: $isActive, isRunning: $isRunning, action: onTapLapReset)
             Spacer()
             StartStopButton(isActive: $isActive, isRunning: $isRunning, action: onTapStartStop)
-        }.padding(EdgeInsets(top: 0, leading: 32, bottom: 0, trailing: 32))
+        }
+        .padding(EdgeInsets(top: 0, leading: 32, bottom: 0, trailing: 32))
     }
     
 }

@@ -14,14 +14,19 @@ struct StopwatchView : View {
     
     var body: some View {
         NavigationView {
-            StopwatchControlsView(
-                isActive: $stopwatch.isActive,
-                isRunning: $stopwatch.isRunning,
-                onTapLapReset: self.stopwatch.recordLapTimeOrReset,
-                onTapStartStop: self.stopwatch.startOrStop
-            )
+            VStack {
+                Spacer()
+                StopwatchControlsView(
+                    isActive: $stopwatch.isActive,
+                    isRunning: $stopwatch.isRunning,
+                    onTapLapReset: self.stopwatch.recordLapTimeOrReset,
+                    onTapStartStop: self.stopwatch.startOrStop
+                    )
+                Spacer()
+            }
+            .environment(\.colorScheme, .dark)
             .navigationBarTitle(Text("Stopwatch"), displayMode: .inline)
-        }
+        }.environment(\.colorScheme, .dark)
     }
 }
 
