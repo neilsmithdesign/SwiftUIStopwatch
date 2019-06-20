@@ -36,6 +36,7 @@ final class Stopwatch: BindableObject {
 
     // MARK: Data
     private var lapTimes: [Date] = []
+    private var elapsedTime: TimeInterval = 0
     
 }
 

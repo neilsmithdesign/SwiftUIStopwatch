@@ -31,13 +31,4 @@ struct StopwatchView : View {
 }
 
 
-//#if DEBUG
-//struct StopwatchView_Previews : PreviewProvider {
-//    static var previews: some View {
-//        StopwatchView()
-//    }
-//}
-//#endif
-
-
 
