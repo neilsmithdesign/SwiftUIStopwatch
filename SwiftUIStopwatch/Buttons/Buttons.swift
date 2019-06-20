@@ -102,7 +102,7 @@ struct CircleView: View {
     
     var body: some View {
         ZStack {
-            Circle().frame(width: 96, height: 96, alignment: .center)
+            Circle().frame(width: 80, height: 80, alignment: .center)
             Text(text).color(self.textColor)
         }
     }

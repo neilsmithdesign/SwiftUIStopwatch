@@ -52,23 +52,41 @@ struct TimeView: View {
     }
     
     var body: some View {
-        HStack {
-            DigitView(text: minutes)
-            DigitView(text: ":")
-            DigitView(text: seconds)
-            DigitView(text: ".")
-            DigitView(text: milliseconds)
+        HStack(alignment: .lastTextBaseline, spacing: 0) {
+            VStack { DigitView(text: minutes) }.frame(minWidth: 0, maxWidth: .infinity)
+            VStack { TimeText(text: ":") }
+            VStack { DigitView(text: seconds) }.frame(minWidth: 0, maxWidth: .infinity)
+            VStack { TimeText(text: ".") }
+            VStack { DigitView(text: milliseconds) }.frame(minWidth: 0, maxWidth: .infinity)
+        }.padding([.leading, .trailing], 16)
+    }
+    
+}
+
+extension TimeView {
+    
+    private struct DigitView: View {
+    
+        let text: String
+        private var first: String { String(text.first!) }
+        private var last: String { String(text.last!) }
+        
+        var body: some View {
+            HStack(spacing: 0) {
+                VStack { TimeText(text: first) }.frame(minWidth: 0, maxWidth: .infinity)
+                VStack { TimeText(text: last) }.frame(minWidth: 0, maxWidth: .infinity)
+            }
         }
     }
     
-    private struct DigitView: View {
+    private struct TimeText: View {
         
         let text: String
+        private let fontSize: CGFloat = 80
         
         var body: some View {
-            Text(text).font(.system(size: 84)).fontWeight(.thin)
+            Text(text).font(.system(size: fontSize)).fontWeight(.thin)
         }
-        
     }
     
 }

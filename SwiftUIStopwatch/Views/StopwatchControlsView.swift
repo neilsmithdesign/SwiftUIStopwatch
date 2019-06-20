@@ -22,7 +22,7 @@ struct StopwatchControlsView : View {
             Spacer()
             StartStopButton(isActive: $isActive, isRunning: $isRunning, action: onTapStartStop)
         }
-        .padding(EdgeInsets(top: 0, leading: 32, bottom: 0, trailing: 32))
+        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
     }
     
 }
