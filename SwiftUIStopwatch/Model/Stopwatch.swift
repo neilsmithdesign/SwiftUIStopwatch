@@ -10,6 +10,12 @@ import Foundation
 import SwiftUI
 import Combine
 
+struct LapTime: Identifiable {
+    var id: Int
+    let value: TimeInterval
+}
+
+
 final class Stopwatch: BindableObject {
     
     // MARK: Binding
@@ -35,7 +41,7 @@ final class Stopwatch: BindableObject {
 
 
     // MARK: Data
-    private var lapTimes: [TimeInterval] = []
+    private (set) var lapTimes: [LapTime] = []
     private (set) var elapsedTime: TimeInterval = 0
     
     
@@ -98,7 +104,9 @@ extension Stopwatch {
     }
     
     private func recordLapTime() {
-        lapTimes.append(elapsedTime)
+        let id = lapTimes.count + 1
+        let lapTime = LapTime(id: id, value: elapsedTime)
+        lapTimes.insert(lapTime, at: 0)
         notify()
     }
     

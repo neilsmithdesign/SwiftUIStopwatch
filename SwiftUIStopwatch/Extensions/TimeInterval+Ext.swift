@@ -61,4 +61,18 @@ extension TimeInterval {
         return n < 10 ? "0\(n)" : "\(n)"
     }
     
+    var minutes: String {
+        let strings = TimeInterval.formatted(for: self.values([.minutes, .seconds, .milliseconds]))
+        return strings[.minutes]!
+    }
+    var seconds: String {
+        let strings = TimeInterval.formatted(for: self.values([.minutes, .seconds, .milliseconds]))
+        return strings[.seconds]!
+    }
+    var milliseconds: String {
+        let strings = TimeInterval.formatted(for: self.values([.minutes, .seconds, .milliseconds]))
+        return strings[.milliseconds]!
+    }
+    
+    
 }

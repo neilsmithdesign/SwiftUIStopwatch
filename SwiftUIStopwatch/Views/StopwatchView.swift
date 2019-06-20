@@ -15,78 +15,49 @@ struct StopwatchView : View {
     var body: some View {
         NavigationView {
             VStack {
+                Top(stopwatch: self.stopwatch)
+                Bottom(stopwatch: self.stopwatch)
+            }
+            .navigationBarTitle(Text("Stopwatch"), displayMode: .inline)
+        }.environment(\.colorScheme, .dark)
+    }
+    
+}
+
+
+// MARK: Subviews
+extension StopwatchView {
+    
+    private struct Top: View {
+        
+        @ObjectBinding var stopwatch: Stopwatch
+        
+        var body: some View {
+            VStack {
                 Spacer()
-                TimeView(time: $stopwatch.elapsedTime)
+                TimeView(time: $stopwatch.elapsedTime, fontSize: 80)
                 Spacer()
                 StopwatchControlsView(
                     isActive: $stopwatch.isActive,
                     isRunning: $stopwatch.isRunning,
                     onTapLapReset: self.stopwatch.recordLapTimeOrReset,
                     onTapStartStop: self.stopwatch.startOrStop
-                    )
+                )
                 Spacer()
-            }
-            .environment(\.colorScheme, .dark)
-            .navigationBarTitle(Text("Stopwatch"), displayMode: .inline)
-        }.environment(\.colorScheme, .dark)
-    }
-}
-
-
-
-struct TimeView: View {
-    
-    @Binding var time: TimeInterval
-    
-    var minutes: String {
-        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
-        return strings[.minutes]!
-    }
-    var seconds: String {
-        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
-        return strings[.seconds]!
-    }
-    var milliseconds: String {
-        let strings = TimeInterval.formatted(for: time.values([.minutes, .seconds, .milliseconds]))
-        return strings[.milliseconds]!
+            }.aspectRatio(1, contentMode: .fill)
+        }
+        
     }
     
-    var body: some View {
-        HStack(alignment: .lastTextBaseline, spacing: 0) {
-            VStack { DigitView(text: minutes) }.frame(minWidth: 0, maxWidth: .infinity)
-            VStack { TimeText(text: ":") }
-            VStack { DigitView(text: seconds) }.frame(minWidth: 0, maxWidth: .infinity)
-            VStack { TimeText(text: ".") }
-            VStack { DigitView(text: milliseconds) }.frame(minWidth: 0, maxWidth: .infinity)
-        }.padding([.leading, .trailing], 16)
-    }
-    
-}
-
-extension TimeView {
-    
-    private struct DigitView: View {
-    
-        let text: String
-        private var first: String { String(text.first!) }
-        private var last: String { String(text.last!) }
+    private struct Bottom: View {
+        
+        @ObjectBinding var stopwatch: Stopwatch
         
         var body: some View {
-            HStack(spacing: 0) {
-                VStack { TimeText(text: first) }.frame(minWidth: 0, maxWidth: .infinity)
-                VStack { TimeText(text: last) }.frame(minWidth: 0, maxWidth: .infinity)
+            List(stopwatch.lapTimes.identified(by: \.id)) { time in
+                return LapTimeRow(number: time.id, time: time.value)
             }
         }
     }
-    
-    private struct TimeText: View {
-        
-        let text: String
-        private let fontSize: CGFloat = 80
-        
-        var body: some View {
-            Text(text).font(.system(size: fontSize)).fontWeight(.thin)
-        }
-    }
-    
+
 }
