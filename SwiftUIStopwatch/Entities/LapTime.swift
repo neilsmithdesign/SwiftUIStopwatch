@@ -11,4 +11,19 @@ import SwiftUI
 struct LapTime: Identifiable {
     var id: Int
     var value: TimeInterval
+    var ranking: Ranking
+    
+    enum Ranking: String {
+        case other
+        case shortest
+        case longest
+        var color: Color {
+            switch self {
+            case .other: return .white
+            case .shortest: return .green
+            case .longest: return .red
+            }
+        }
+    }
+    
 }

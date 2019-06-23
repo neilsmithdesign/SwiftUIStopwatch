@@ -10,18 +10,17 @@ import SwiftUI
 
 struct LapTimeRow: View {
     
-    let number: Int
-    var time: TimeInterval
+    let lapTime: LapTime
     
     var timeText: String {
-        return "\(time.minutes):\(time.seconds).\(time.milliseconds)"
+        return "\(lapTime.value.minutes):\(lapTime.value.seconds).\(lapTime.value.milliseconds)"
     }
     
     var body: some View {
         HStack {
-            Text("Lap \(number)")
+            Text("Lap \(lapTime.id)").color(lapTime.ranking.color)
             Spacer()
-            TimeView(time: time, fontSize: 17, fontWeight: .regular).frame(width: 104)
+            TimeView(time: lapTime.value, textColor: lapTime.ranking.color, fontSize: 17, fontWeight: .regular).frame(width: 104)
         }
     }
     

@@ -11,16 +11,17 @@ import SwiftUI
 struct TimeView: View {
     
     var time: TimeInterval
+    let textColor: Color
     let fontSize: CGFloat
     let fontWeight: Font.Weight
     
     var body: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
-            VStack { DigitView(text: time.minutes, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
-            VStack { TimeText(text: ":", fontSize: fontSize, fontWeight: fontWeight) }
-            VStack { DigitView(text: time.seconds, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
-            VStack { TimeText(text: ".", fontSize: fontSize, fontWeight: fontWeight) }
-            VStack { DigitView(text: time.milliseconds, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
+            VStack { DigitView(text: time.minutes, textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
+            VStack { TimeText(text: ":", textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }
+            VStack { DigitView(text: time.seconds, textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
+            VStack { TimeText(text: ".", textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }
+            VStack { DigitView(text: time.milliseconds, textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
         }.padding([.leading, .trailing], 16)
     }
     
@@ -31,6 +32,7 @@ extension TimeView {
     private struct DigitView: View {
         
         let text: String
+        let textColor: Color
         let fontSize: CGFloat
         let fontWeight: Font.Weight
         private var first: String { String(text.first!) }
@@ -38,8 +40,8 @@ extension TimeView {
         
         var body: some View {
             HStack(spacing: 0) {
-                VStack { TimeText(text: first, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
-                VStack { TimeText(text: last, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
+                VStack { TimeText(text: first, textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
+                VStack { TimeText(text: last, textColor: textColor, fontSize: fontSize, fontWeight: fontWeight) }.frame(minWidth: 0, maxWidth: .infinity)
             }
         }
     }
@@ -47,11 +49,12 @@ extension TimeView {
     private struct TimeText: View {
         
         let text: String
+        let textColor: Color
         let fontSize: CGFloat
         let fontWeight: Font.Weight
         
         var body: some View {
-            Text(text).font(.system(size: fontSize)).fontWeight(fontWeight).scaledToFit()
+            Text(text).color(textColor).font(.system(size: fontSize)).fontWeight(fontWeight).scaledToFit()
         }
     }
     

@@ -35,7 +35,7 @@ extension StopwatchView {
         var body: some View {
             VStack {
                 Spacer()
-                TimeView(time: stopwatch.elapsedTime, fontSize: 80, fontWeight: .thin)
+                TimeView(time: stopwatch.elapsedTime, textColor: .white, fontSize: 80, fontWeight: .thin)
                 Spacer()
                 StopwatchControlsView(
                     mode: $stopwatch.mode,
@@ -53,8 +53,8 @@ extension StopwatchView {
         @ObjectBinding var stopwatch: Stopwatch
         
         var body: some View {
-            List(stopwatch.lapTimes.identified(by: \.id)) { time in
-                LapTimeRow(number: time.id, time: time.value)
+            List(stopwatch.lapTimes.identified(by: \.id)) { lapTime in
+                LapTimeRow(lapTime: lapTime)
             }
         }
     }
