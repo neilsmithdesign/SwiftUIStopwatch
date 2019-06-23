@@ -12,10 +12,9 @@ struct LapResetButton: View {
     
     
     // MARK: Binding
-    @Binding var isActive: Bool
-    @Binding var isRunning: Bool
-    private var isPaused: Bool {
-        return isActive && !isRunning
+    @Binding var mode: Stopwatch.Mode
+    private var isActive: Bool {
+        return mode != .inactive
     }
     
     
@@ -23,14 +22,14 @@ struct LapResetButton: View {
     var body: some View {
         Button(action: onTap) {
             CircleView(text: text, textColor: textColor).foregroundColor(self.color)
-            }.disabled(!isActive)
+        }.disabled(!isActive)
     }
     
     
     // MARK: Action
     var action: (() -> Void)
     private func onTap() {
-        guard self.isActive else { return }
+        guard isActive else { return }
         self.action()
     }
     
@@ -45,7 +44,7 @@ struct LapResetButton: View {
     
     // MARK: Text
     private var text: String {
-        isPaused ? "Reset" : "Lap"
+        mode == .paused ? "Reset" : "Lap"
     }
     private var textColor: Color {
         isActive ? Color.white : Color.white.opacity(0.5)
@@ -58,8 +57,7 @@ struct StartStopButton: View {
     
     
     // MARK: Binding
-    @Binding var isActive: Bool
-    @Binding var isRunning: Bool
+    @Binding var mode: Stopwatch.Mode
     
     
     // MARK: Body
@@ -80,16 +78,16 @@ struct StartStopButton: View {
     
     // MARK: Color
     private var color: Color {
-        isRunning ? .red : .green
+        mode == .running ? .red : .green
     }
     
     
     // MARK: Text
     private var text: String {
-        isRunning ? "Stop" : "Start"
+        mode == .running ? "Stop" : "Start"
     }
     private var textColor: Color {
-        isRunning ? .red : .green
+        mode == .running ? .red : .green
     }
     
 }

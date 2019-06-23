@@ -38,8 +38,7 @@ extension StopwatchView {
                 TimeView(time: $stopwatch.elapsedTime, fontSize: 80)
                 Spacer()
                 StopwatchControlsView(
-                    isActive: $stopwatch.isActive,
-                    isRunning: $stopwatch.isRunning,
+                    mode: $stopwatch.modee,
                     onTapLapReset: self.stopwatch.recordLapTimeOrReset,
                     onTapStartStop: self.stopwatch.startOrStop
                 )

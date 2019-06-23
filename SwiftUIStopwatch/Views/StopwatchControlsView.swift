@@ -10,17 +10,16 @@ import SwiftUI
 
 struct StopwatchControlsView : View {
     
-    @Binding var isActive: Bool
-    @Binding var isRunning: Bool
+    @Binding var mode: Stopwatch.Mode
     
     var onTapLapReset: () -> Void
     var onTapStartStop: () -> Void
     
     var body: some View {
         HStack {
-            LapResetButton(isActive: $isActive, isRunning: $isRunning, action: onTapLapReset)
+            LapResetButton(mode: $mode, action: onTapLapReset)
             Spacer()
-            StartStopButton(isActive: $isActive, isRunning: $isRunning, action: onTapStartStop)
+            StartStopButton(mode: $mode, action: onTapStartStop)
         }
         .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
     }

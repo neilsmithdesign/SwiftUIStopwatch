@@ -18,6 +18,7 @@ struct LapTime: Identifiable {
 
 final class Stopwatch: BindableObject {
     
+    
     // MARK: Binding
     var didChange = PassthroughSubject<Void, Never>()
     
@@ -27,19 +28,9 @@ final class Stopwatch: BindableObject {
     
     
     // MARK: State
-    private (set) var isActive: Bool = false
+    private (set) var modee: Mode = .inactive
     
-    private (set) var isRunning: Bool = false
     
-    private var mode: Mode {
-        if isActive {
-            return isRunning ? .active : .paused
-        } else {
-            return .inactive
-        }
-    }
-
-
     // MARK: Data
     private (set) var lapTimes: [LapTime] = []
     private (set) var elapsedTime: TimeInterval = 0
@@ -60,17 +51,17 @@ final class Stopwatch: BindableObject {
 extension Stopwatch {
     
     func startOrStop() {
-        switch mode {
+        switch modee {
         case .inactive: start()
-        case .active: pause()
+        case .running: pause()
         case .paused: start()
         }
     }
     
     func recordLapTimeOrReset() {
-        switch mode {
+        switch modee {
         case .inactive: return
-        case .active: recordLapTime()
+        case .running: recordLapTime()
         case .paused: reset()
         }
     }
@@ -82,22 +73,19 @@ extension Stopwatch {
 extension Stopwatch {
     
     private func start() {
-        isRunning = true
-        isActive = true
+        modee = .running
         timer.start()
         notify()
     }
     
     private func pause() {
-        isRunning = false
-        isActive = true
+        modee = .paused
         timer.pause()
         notify()
     }
     
     private func reset() {
-        isRunning = false
-        isActive = false
+        modee = .inactive
         lapTimes.removeAll()
         timer.reset()
         notify()
@@ -123,8 +111,9 @@ extension Stopwatch {
     
     enum Mode: String {
         case inactive
-        case active
+        case running
         case paused
     }
     
 }
+
