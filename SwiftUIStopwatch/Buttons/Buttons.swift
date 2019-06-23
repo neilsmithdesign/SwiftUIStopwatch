@@ -21,7 +21,12 @@ struct LapResetButton: View {
     // MARK: Body
     var body: some View {
         Button(action: onTap) {
-            CircleView(text: text, textColor: textColor).foregroundColor(self.color)
+            CircleView(
+                text: text,
+                textColor: textColor,
+                foregroundColor: color,
+                opacity: 1
+            )
         }.disabled(!isActive)
     }
     
@@ -64,10 +69,11 @@ struct StartStopButton: View {
     var body: some View {
         Button(action: action) {
             CircleView(
-                text: self.text,
-                textColor: self.textColor
-                )
-                .foregroundColor(self.color.opacity(0.5))
+                text: text,
+                textColor: textColor,
+                foregroundColor: color,
+                opacity: 0.5
+            )
         }
     }
     
@@ -97,10 +103,15 @@ struct CircleView: View {
     
     var text: String
     var textColor: Color
+    var foregroundColor: Color
+    var opacity: Double
+    private var fillColor: Color {
+        foregroundColor.opacity(opacity)
+    }
     
     var body: some View {
         ZStack {
-            Circle().frame(width: 80, height: 80, alignment: .center)
+            Circle().fill(fillColor).frame(width: 80, height: 80, alignment: .center)
             Text(text).color(self.textColor)
         }
     }

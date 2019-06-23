@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C38807C22BF801100C87136 /* LapTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C38807B22BF801100C87136 /* LapTime.swift */; };
 		8C3E7D5A22BA307200CE1DBA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3E7D5922BA307200CE1DBA /* AppDelegate.swift */; };
 		8C3E7D5C22BA307200CE1DBA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3E7D5B22BA307200CE1DBA /* SceneDelegate.swift */; };
 		8C3E7D5E22BA307200CE1DBA /* StopwatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3E7D5D22BA307200CE1DBA /* StopwatchView.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8C38807B22BF801100C87136 /* LapTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LapTime.swift; sourceTree = "<group>"; };
 		8C3E7D5622BA307200CE1DBA /* SwiftUIStopwatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIStopwatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C3E7D5922BA307200CE1DBA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C3E7D5B22BA307200CE1DBA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C38807A22BF800600C87136 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				8C38807B22BF801100C87136 /* LapTime.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		8C3E7D4D22BA307100CE1DBA = {
 			isa = PBXGroup;
 			children = (
@@ -72,6 +82,7 @@
 			children = (
 				8C3E7D5922BA307200CE1DBA /* AppDelegate.swift */,
 				8C3E7D5B22BA307200CE1DBA /* SceneDelegate.swift */,
+				8C38807A22BF800600C87136 /* Entities */,
 				8CF1419D22BB8A0E00982491 /* Model */,
 				8CAD122522BA46B300F7487C /* Views */,
 				8CAD122A22BA46FD00F7487C /* Buttons */,
@@ -215,6 +226,7 @@
 				8C9D5ED622BBA61600FFEA9E /* TimeView.swift in Sources */,
 				8CF141A022BB8A3500982491 /* TimeInterval+Ext.swift in Sources */,
 				8C9D5ED822BBAF2C00FFEA9E /* LapTimeRow.swift in Sources */,
+				8C38807C22BF801100C87136 /* LapTime.swift in Sources */,
 				8CAD122922BA46D600F7487C /* StopwatchControlsView.swift in Sources */,
 				8C3E7D5E22BA307200CE1DBA /* StopwatchView.swift in Sources */,
 			);

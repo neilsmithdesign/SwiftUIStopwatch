@@ -10,12 +10,6 @@ import Foundation
 import SwiftUI
 import Combine
 
-struct LapTime: Identifiable {
-    var id: Int
-    let value: TimeInterval
-}
-
-
 final class Stopwatch: BindableObject {
     
     
@@ -28,20 +22,28 @@ final class Stopwatch: BindableObject {
     
     
     // MARK: State
-    private (set) var modee: Mode = .inactive
+    private (set) var mode: Mode = .inactive
     
     
     // MARK: Data
-    private (set) var lapTimes: [LapTime] = []
     private (set) var elapsedTime: TimeInterval = 0
+    private (set) var lapTimes: [LapTime] = []
+    var currentLapTime: TimeInterval {
+        guard let lapTime = lapTimes.first else { return 0 }
+        return lapTime.value
+    }
     
     
     // MARK: Utilities
     private lazy var timer: TimeController = {
-        let tc = TimeController(mode: .stopwatch) { [weak self] time in
+        return TimeController(mode: .stopwatch) { [weak self] time in
             self?.update(for: time)
         }
-        return tc
+    }()
+    private lazy var lapTimer: TimeController = {
+        return TimeController(mode: .stopwatch) { [weak self] time in
+            self?.update(forLap: time)
+        }
     }()
     
 }
@@ -51,7 +53,7 @@ final class Stopwatch: BindableObject {
 extension Stopwatch {
     
     func startOrStop() {
-        switch modee {
+        switch mode {
         case .inactive: start()
         case .running: pause()
         case .paused: start()
@@ -59,7 +61,7 @@ extension Stopwatch {
     }
     
     func recordLapTimeOrReset() {
-        switch modee {
+        switch mode {
         case .inactive: return
         case .running: recordLapTime()
         case .paused: reset()
@@ -69,37 +71,65 @@ extension Stopwatch {
 }
 
 
-// MARK: - Helpers
+// MARK: - User interactions
 extension Stopwatch {
-    
+ 
     private func start() {
-        modee = .running
+        mode = .running
         timer.start()
+        startNewLapTimeIfNeeded()
         notify()
     }
     
     private func pause() {
-        modee = .paused
+        mode = .paused
         timer.pause()
+        lapTimer.pause()
         notify()
     }
     
     private func reset() {
-        modee = .inactive
-        lapTimes.removeAll()
+        mode = .inactive
         timer.reset()
+        lapTimer.reset()
+        lapTimes.removeAll()
         notify()
     }
     
     private func recordLapTime() {
-        let id = lapTimes.count + 1
-        let lapTime = LapTime(id: id, value: elapsedTime)
-        lapTimes.insert(lapTime, at: 0)
+        startNewLapTime()
         notify()
+    }
+    
+}
+
+// MARK: - Helpers
+extension Stopwatch {
+    
+    private func startNewLapTimeIfNeeded() {
+        if lapTimes.isEmpty {
+            startNewLapTime()
+        } else {
+            lapTimer.resume()
+        }
+    }
+    
+    private func startNewLapTime() {
+        let id = lapTimes.count + 1
+        let lapTime = LapTime(id: id, value: 0)
+        lapTimes.insert(lapTime, at: 0)
+        lapTimer.reset()
+        lapTimer.start()
     }
     
     private func update(for newTime: TimeInterval) {
         elapsedTime = newTime
+        notify()
+    }
+    
+    private func update(forLap time: TimeInterval) {
+        guard !lapTimes.isEmpty else { return }
+        lapTimes[0].value = time
         notify()
     }
     

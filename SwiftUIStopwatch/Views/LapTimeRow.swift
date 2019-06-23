@@ -11,7 +11,7 @@ import SwiftUI
 struct LapTimeRow: View {
     
     let number: Int
-    let time: TimeInterval
+    var time: TimeInterval
     
     var timeText: String {
         return "\(time.minutes):\(time.seconds).\(time.milliseconds)"
@@ -21,7 +21,7 @@ struct LapTimeRow: View {
         HStack {
             Text("Lap \(number)")
             Spacer()
-            Text(timeText)
+            TimeView(time: time, fontSize: 17, fontWeight: .regular).frame(width: 104)
         }
     }
     
