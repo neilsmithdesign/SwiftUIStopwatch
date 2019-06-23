@@ -123,6 +123,8 @@ extension Stopwatch {
         analyseLapTimes()
     }
     
+    /// Traverse the lapTimes array to find the shortest and longest times
+    /// Only applicable when there are 2 or more 'recorded' lap times.
     private func analyseLapTimes() {
         guard lapTimes.count > 2 else { return }
         let recorded = Array(lapTimes.dropFirst())
@@ -136,7 +138,6 @@ extension Stopwatch {
         if let l = longest, let index = lapTimes.firstIndex(where: { $0.value == l.value }) {
             longestIndex = index
         }
-        
         for i in 0..<lapTimes.count {
             if let sIndex = shortestIndex, sIndex == i {
                 lapTimes[i].ranking = .shortest
@@ -145,11 +146,6 @@ extension Stopwatch {
             } else {
                 lapTimes[i].ranking = .other
             }
-            
-        }
-        
-        for lt in lapTimes {
-            print("Lap time: \(lt.value), ranking: \(lt.ranking.rawValue)")
         }
     }
     
