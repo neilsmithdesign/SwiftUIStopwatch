@@ -120,33 +120,7 @@ extension Stopwatch {
         lapTimes.insert(lapTime, at: 0)
         lapTimer.reset()
         lapTimer.start()
-        analyseLapTimes()
-    }
-    
-    /// Traverse the lapTimes array to find the shortest and longest times
-    /// Only applicable when there are 2 or more 'recorded' lap times.
-    private func analyseLapTimes() {
-        guard lapTimes.count > 2 else { return }
-        let recorded = Array(lapTimes.dropFirst())
-        let shortest = recorded.min(by: { $0.value < $1.value })
-        let longest = recorded.max(by: { $0.value < $1.value })
-        var shortestIndex: Int?
-        var longestIndex: Int?
-        if let s = shortest, let index = lapTimes.firstIndex(where: { $0.value == s.value }) {
-            shortestIndex = index
-        }
-        if let l = longest, let index = lapTimes.firstIndex(where: { $0.value == l.value }) {
-            longestIndex = index
-        }
-        for i in 0..<lapTimes.count {
-            if let sIndex = shortestIndex, sIndex == i {
-                lapTimes[i].ranking = .shortest
-            } else if let lIndex = longestIndex, lIndex == i {
-                lapTimes[i].ranking = .longest
-            } else {
-                lapTimes[i].ranking = .other
-            }
-        }
+        lapTimes.analyse()
     }
     
     private func update(for newTime: TimeInterval) {
